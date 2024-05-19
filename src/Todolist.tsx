@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "./Button";
 
 export type TaskType = {
   id: number;
@@ -12,32 +13,35 @@ type PropsType = {
   // tasks:TaskType[]; -------equal
 };
 
-export function Todolist(props: PropsType) {
+export function Todolist({ title, tasks }: PropsType) {
+  const taskLists =
+    tasks.length === 0 ? (
+      <span> Your tasklist is empty</span>
+    ) : (
+      <ul>
+        {tasks.map((task) => {
+          return (
+            <li key={task.id}>
+              <input type="checkbox" checked={task.isDone} />
+              <span>{task.title}</span>
+            </li>
+          );
+        })}
+      </ul>
+    );
+
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3>{title}</h3>
       <div>
         <input />
-        <button>+</button>
+        <Button title={"+"} />
       </div>
-      <ul>
-        <li>
-          <input type="checkbox" checked={props.tasks[0].isDone} />
-          <span>{props.tasks[0].title}</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={props.tasks[1].isDone} />
-          <span>{props.tasks[1].title}</span>
-        </li>
-        <li>
-          <input type="checkbox" checked={props.tasks[2].isDone} />
-          <span>{props.tasks[2].title}</span>
-        </li>
-      </ul>
+      {taskLists}
       <div>
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
+        <Button title={"All"} />
+        <Button title={"Active"} />
+        <Button title={"Completed"} />
       </div>
     </div>
   );
