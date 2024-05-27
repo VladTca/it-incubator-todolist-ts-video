@@ -10,10 +10,17 @@ export type TaskType = {
 type PropsType = {
   title: string;
   tasks: Array<TaskType>;
+  removeTask: (taskId: number) => void;
+  changeFilter: (filter: "all" | "active" | "completed") => void;
   // tasks:TaskType[]; -------equal
 };
 
-export function Todolist({ title, tasks }: PropsType) {
+export function Todolist({
+  title,
+  tasks,
+  removeTask,
+  changeFilter,
+}: PropsType) {
   const taskLists =
     tasks.length === 0 ? (
       <span> Your tasklist is empty</span>
@@ -24,6 +31,7 @@ export function Todolist({ title, tasks }: PropsType) {
             <li key={task.id}>
               <input type="checkbox" checked={task.isDone} />
               <span>{task.title}</span>
+              <Button title={"x"} onClickhandler={() => removeTask(task.id)} />
             </li>
           );
         })}
@@ -39,9 +47,15 @@ export function Todolist({ title, tasks }: PropsType) {
       </div>
       {taskLists}
       <div>
-        <Button title={"All"} />
-        <Button title={"Active"} />
-        <Button title={"Completed"} />
+        <Button onClickhandler={() => changeFilter("all")} title={"All"} />
+        <Button
+          onClickhandler={() => changeFilter("active")}
+          title={"Active"}
+        />
+        <Button
+          onClickhandler={() => changeFilter("completed")}
+          title={"Completed"}
+        />
       </div>
     </div>
   );
