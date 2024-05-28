@@ -21,6 +21,7 @@ export function Todolist({
   removeTask,
   changeFilter,
 }: PropsType) {
+  debugger;
   const taskLists =
     tasks.length === 0 ? (
       <span> Your tasklist is empty</span>
