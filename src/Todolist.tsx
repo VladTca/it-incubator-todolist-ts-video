@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Button";
 
 export type TaskType = {
-  id: number;
+  id: string;
   title: string;
   isDone: boolean;
 };
@@ -10,8 +10,9 @@ export type TaskType = {
 type PropsType = {
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (taskId: number) => void;
+  removeTask: (taskId: string) => void;
   changeFilter: (filter: "all" | "active" | "completed") => void;
+  addTask: (title: string) => void;
   // tasks:TaskType[]; -------equal
 };
 
@@ -20,8 +21,8 @@ export function Todolist({
   tasks,
   removeTask,
   changeFilter,
+  addTask,
 }: PropsType) {
-  debugger;
   const taskLists =
     tasks.length === 0 ? (
       <span> Your tasklist is empty</span>
@@ -39,12 +40,33 @@ export function Todolist({
       </ul>
     );
 
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+
+  const onNewTitleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTaskTitle(e.currentTarget.value);
+  };
+
+  const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.ctrlKey && e.key === "Enter") {
+      addTask(newTaskTitle);
+      setNewTaskTitle("");
+    }
+  };
+  const addNewTask = () => {
+    addTask(newTaskTitle);
+    setNewTaskTitle("");
+  };
+
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <input />
-        <Button title={"+"} />
+        <input
+          value={newTaskTitle}
+          onChange={onNewTitleChangeHandler}
+          onKeyDown={onKeyPressHandler}
+        />
+        <Button title={"+"} onClickhandler={addNewTask} />
       </div>
       {taskLists}
       <div>
