@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "./Button";
 
 export type TaskType = {
@@ -56,17 +56,32 @@ export function Todolist({
     addTask(newTaskTitle);
     setNewTaskTitle("");
   };
+  // const addTaskHandler = () => {
+  //   if (taskInputRef.current) {
+  //     addTask(taskInputRef.current.value);
+  //     taskInputRef.current.value = "";
+  //   }
+  // };
+
+  // const taskInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div>
       <h3>{title}</h3>
       <div>
         <input
+          // ref={taskInputRef}
           value={newTaskTitle}
           onChange={onNewTitleChangeHandler}
           onKeyDown={onKeyPressHandler}
         />
-        <Button title={"+"} onClickhandler={addNewTask} />
+        <Button
+          title={"+"}
+          // onClickhandler={addTaskHandler}
+          onClickhandler={addNewTask}
+          disabled={newTaskTitle.trim() === ""}
+        />
+        {newTaskTitle.length > 10 ? "title is too long" : ""}
       </div>
       {taskLists}
       <div>
