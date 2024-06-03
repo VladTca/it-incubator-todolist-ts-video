@@ -29,11 +29,12 @@ export function Todolist({
     ) : (
       <ul>
         {tasks.map((task) => {
+          const removeHandler = () => removeTask(task.id);
           return (
             <li key={task.id}>
               <input type="checkbox" checked={task.isDone} />
               <span>{task.title}</span>
-              <Button title={"x"} onClickhandler={() => removeTask(task.id)} />
+              <Button title={"x"} onClickhandler={removeHandler} />
             </li>
           );
         })}
@@ -48,6 +49,9 @@ export function Todolist({
 
   const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.ctrlKey && e.key === "Enter") {
+      if (newTaskTitle.trim() === "") {
+        return;
+      }
       addTask(newTaskTitle);
       setNewTaskTitle("");
     }
@@ -74,14 +78,16 @@ export function Todolist({
           value={newTaskTitle}
           onChange={onNewTitleChangeHandler}
           onKeyDown={onKeyPressHandler}
+          // minLength={3}
+          // maxLength={5}
         />
         <Button
           title={"+"}
           // onClickhandler={addTaskHandler}
           onClickhandler={addNewTask}
-          disabled={newTaskTitle.trim() === ""}
+          disabled={newTaskTitle.trim() === "" || newTaskTitle.length > 20}
         />
-        {newTaskTitle.length > 10 ? "title is too long" : ""}
+        {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
       </div>
       {taskLists}
       <div>
