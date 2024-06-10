@@ -26,14 +26,21 @@ function App() {
     setTasks(newTasks);
   }
 
-  const changeTaskStatus = (taskId: string) => {
-    const taskForUpdate = tasks.find((t) => t.id === taskId);
-    // if(taskForUpdate){
-    //   taskForUpdate.isDone=!taskForUpdate.isDone
-    //   setTasks([...tasks])
-    taskForUpdate &&
-      (taskForUpdate.isDone = !taskForUpdate.isDone) &&
-      setTasks([...tasks]);
+  const changeTaskStatus = (taskId: string, newIsDone: boolean) => {
+    // const taskForUpdate = tasks.find((t) => t.id === taskId);
+    // if (taskForUpdate) {
+    //   taskForUpdate.isDone = !taskForUpdate.isDone;
+    //   setTasks([...tasks]);
+    // }
+    // // taskForUpdate &&
+    // //   (taskForUpdate.isDone = !taskForUpdate.isDone) &&
+    // //   setTasks([...tasks]);
+
+    const nextState = tasks.map((task) =>
+      task.id === taskId ? { ...task, isDone: newIsDone } : task,
+    );
+
+    setTasks(nextState);
   };
 
   return (
@@ -45,6 +52,7 @@ function App() {
         // changeFilter={changeFilter}
         removeTask={removeTask}
         addTask={addTask}
+        changeTaskStatus={changeTaskStatus}
       />
     </div>
   );
