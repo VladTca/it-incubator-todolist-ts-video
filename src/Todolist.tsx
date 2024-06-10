@@ -90,8 +90,14 @@ export function Todolist({
       setNewTaskTitle("");
     }
   };
-  const addNewTask = () => {
-    addTask(newTaskTitle);
+
+  const [error, setError] = useState<string | null>(null);
+  const addTaskHandler = () => {
+    if (newTaskTitle.trim() !== "") {
+      addTask(newTaskTitle);
+    } else {
+      setError("Title is required");
+    }
     setNewTaskTitle("");
   };
   // const addTaskHandler = () => {
@@ -112,14 +118,14 @@ export function Todolist({
           value={newTaskTitle}
           onChange={onNewTitleChangeHandler}
           onKeyDown={onKeyPressHandler}
+          className={error ? "error" : ""}
           // minLength={3}
           // maxLength={5}
         />
         <Button
           title={"+"}
-          // onClickhandler={addTaskHandler}
-          onClickhandler={addNewTask}
-          disabled={newTaskTitle.trim() === "" || newTaskTitle.length > 20}
+          onClickhandler={addTaskHandler}
+          disabled={newTaskTitle === "" || newTaskTitle.length > 20}
         />
         {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
       </div>
