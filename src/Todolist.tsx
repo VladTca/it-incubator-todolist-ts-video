@@ -11,7 +11,7 @@ type PropsType = {
   title: string;
   tasks: Array<TaskType>;
   removeTask: (taskId: string) => void;
-  changeFilter: (filter: "all" | "active" | "completed") => void;
+  // changeFilter: (filter: "all" | "active" | "completed") => void;
   addTask: (title: string) => void;
   // tasks:TaskType[]; -------equal
 };
@@ -20,9 +20,24 @@ export function Todolist({
   title,
   tasks,
   removeTask,
-  changeFilter,
+  // changeFilter,
   addTask,
 }: PropsType) {
+  type filterType = "all" | "active" | "completed";
+
+  const [filter, setFilter] = useState<filterType>("all");
+  let filteredTasks = tasks;
+  switch (filter) {
+    case "active":
+      filteredTasks = tasks.filter((task) => !task.isDone);
+      break;
+    case "completed":
+      filteredTasks = tasks.filter((task) => task.isDone);
+      break;
+  }
+  const changeFilter = (newFilterValue: filterType) => {
+    setFilter(newFilterValue);
+  };
   const taskLists =
     tasks.length === 0 ? (
       <span> Your tasklist is empty</span>
