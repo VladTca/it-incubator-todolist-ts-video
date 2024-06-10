@@ -82,6 +82,7 @@ export function Todolist({
   };
 
   const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    error && setError(null);
     if (e.ctrlKey && e.key === "Enter") {
       if (newTaskTitle.trim() === "") {
         return;
@@ -128,6 +129,7 @@ export function Todolist({
           disabled={newTaskTitle === "" || newTaskTitle.length > 20}
         />
         {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
+        {error && <div className="error-message">{error}</div>}
       </div>
       {taskLists}
       <div>
