@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { TaskType, Todolist } from "./Todolist";
+import { filterType, TaskType, Todolist } from "./Todolist";
 import { v1 } from "uuid";
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
     { id: v1(), title: "JS", isDone: true },
     { id: v1(), title: "REACT", isDone: false },
   ]);
+
   console.log(tasks);
 
   const removeTask = (taskId: string) => {
@@ -43,17 +44,47 @@ function App() {
     setTasks(nextState);
   };
 
+  // const todolist = [
+  //   { id: v1(), title: "What to learn", tasks: tasks },
+  //   { id: v1(), title: "What to buy", tasks: tasks },
+  // ];
+
+  type TodoListType = {
+    id: string;
+    title: string;
+    filter: filterType;
+  };
+
+  let [todolist, setTodolist] = useState<TodoListType[]>([
+    { id: v1(), title: "What to learn", filter: "all" },
+    { id: v1(), title: "What to buy", filter: "active" },
+  ]);
+
   return (
     <div className="App">
-      <Todolist
-        title="What to learn"
-        tasks={tasks}
-        // tasks={filteredTasks}
-        // changeFilter={changeFilter}
-        removeTask={removeTask}
-        addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
-      />
+      {todolist.map((tl) => {
+        return (
+          <Todolist
+            key={tl.id}
+            title={tl.title}
+            tasks={tasks}
+            filterx={tl.filter}
+            removeTask={removeTask}
+            // changeFilter={changeFilter}
+            addTask={addTask}
+            changeTaskStatus={changeTaskStatus}
+          />
+        );
+      })}
+      {/*<Todolist*/}
+      {/*   title="What to learn"*/}
+      {/*   tasks={tasks}*/}
+      {/*   // tasks={filteredTasks}*/}
+      {/*   // changeFilter={changeFilter}*/}
+      {/*   removeTask={removeTask}*/}
+      {/*   addTask={addTask}*/}
+      {/*   changeTaskStatus={changeTaskStatus}*/}
+      {/* />*/}
     </div>
   );
 }
