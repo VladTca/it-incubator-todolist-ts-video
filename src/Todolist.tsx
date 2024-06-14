@@ -11,7 +11,7 @@ export type filterType = "all" | "active" | "completed";
 type PropsType = {
   title: string;
   tasks: Array<TaskType>;
-  filterx: "all" | "active" | "completed";
+  filterx: filterType;
   removeTask: (taskId: string) => void;
   // changeFilter: (filter: "all" | "active" | "completed") => void;
   addTask: (title: string) => void;
@@ -30,15 +30,16 @@ export function Todolist({
   changeTaskStatus,
 }: PropsType) {
   const [filter, setFilter] = useState<filterType>(filterx);
+  // filterx
 
   const changeFilter = (newFilterValue: filterType) => {
     setFilter(newFilterValue);
   };
-  const filteredTasks = (filterx: filterType) => {
+  const filteredTasks = () => {
     switch (filter) {
-      case "active" || filterx === "active":
+      case "active":
         return tasks.filter((task) => !task.isDone);
-      case "completed" || filterx === "completed":
+      case "completed":
         return tasks.filter((task) => task.isDone);
 
       default:
@@ -51,7 +52,7 @@ export function Todolist({
       <span> Your tasklist is empty</span>
     ) : (
       <ul>
-        {filteredTasks(filterx).map((task) => {
+        {filteredTasks().map((task) => {
           const removeHandler = () => removeTask(task.id);
           const changeTaskStatusHandler = (
             e: React.ChangeEvent<HTMLInputElement>,

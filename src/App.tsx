@@ -60,6 +60,8 @@ function App() {
     { id: v1(), title: "What to buy", filter: "active" },
   ]);
 
+  let filterTasks = tasks;
+
   return (
     <div className="App">
       {todolist.map((tl) => {
@@ -67,7 +69,7 @@ function App() {
           <Todolist
             key={tl.id}
             title={tl.title}
-            tasks={tasks}
+            tasks={filterTasks}
             filterx={tl.filter}
             removeTask={removeTask}
             // changeFilter={changeFilter}
