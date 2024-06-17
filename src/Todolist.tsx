@@ -86,7 +86,7 @@ export function Todolist({
           value={newTaskTitle}
           onChange={onNewTitleChangeHandler}
           onKeyDown={onKeyPressHandler}
-          className={error ? "error" : ""}
+          className={"error" ? "error" : ""}
           // minLength={3}
           // maxLength={5}
         />
