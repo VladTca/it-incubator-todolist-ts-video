@@ -12,13 +12,15 @@ type PropsType = {
   id: string;
   title: string;
   tasks: Array<TaskType>;
-  removeTask: (taskId: string) => void;
+  removeTask: (taskId: string, todolistId: string) => void;
   changeFilter: (
     filter: "all" | "active" | "completed",
     todolistId: string,
   ) => void;
-  addTask: (title: string) => void;
+  addTask: (title: string, todolistId: string) => void;
   filter: "all" | "active" | "completed";
+  changeStatus: (taskId: string, isDone: boolean, todolistId: string) => void;
+  removeTodolist: (id: string) => void;
   // tasks:TaskType[]; -------equal
 };
 
@@ -30,6 +32,8 @@ export function Todolist({
   addTask,
   filter,
   id,
+  changeStatus,
+  removeTodolist,
 }: PropsType) {
   const taskLists =
     tasks.length === 0 ? (
@@ -37,10 +41,17 @@ export function Todolist({
     ) : (
       <ul>
         {tasks.map((task) => {
-          const removeHandler = () => removeTask(task.id);
+          const changeTaskStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
+            changeStatus(task.id, e.currentTarget.checked, id);
+          };
+          const removeHandler = () => removeTask(task.id, id);
           return (
-            <li key={task.id}>
-              <input type="checkbox" checked={task.isDone} />
+            <li className={task.isDone ? "task-done" : "task"} key={task.id}>
+              <input
+                type="checkbox"
+                checked={task.isDone}
+                onChange={changeTaskStatus}
+              />
               <span>{task.title}</span>
               <Button title={"x"} onClickhandler={removeHandler} />
             </li>
@@ -60,7 +71,8 @@ export function Todolist({
       if (newTaskTitle.trim() === "") {
         return;
       }
-      addTask(newTaskTitle);
+
+      addTask(newTaskTitle, id);
       setNewTaskTitle("");
     }
   };
@@ -68,7 +80,7 @@ export function Todolist({
   const [error, setError] = useState<string | null>(null);
   const addTaskHandler = () => {
     if (newTaskTitle.trim() !== "") {
-      addTask(newTaskTitle);
+      addTask(newTaskTitle, id);
     } else {
       setError("Title is required");
     }
@@ -83,9 +95,16 @@ export function Todolist({
 
   // const taskInputRef = useRef<HTMLInputElement>(null);
 
+  const removeTodoList = (id: string) => {
+    removeTodolist(id);
+  };
+
   return (
     <div className={"todolist"}>
-      <h3>{title}</h3>
+      <h3>
+        {title}
+        <button onClick={() => removeTodoList(id)}>x</button>
+      </h3>
       <div>
         <input
           // ref={taskInputRef}
