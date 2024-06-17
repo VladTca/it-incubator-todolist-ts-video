@@ -42,18 +42,30 @@ function App() {
 
     setTasks(nextState);
   };
+  type TodolistType = {
+    id: string;
+    title: string;
+    filter: "all" | "active" | "completed";
+  };
+  let todlists: TodolistType[] = [
+    { id: v1(), title: "what to learn", filter: "active" },
+    { id: v1(), title: "what to buy", filter: "completed" },
+  ];
 
   return (
     <div className="App">
-      <Todolist
-        title="What to learn"
-        tasks={tasks}
-        // tasks={filteredTasks}
-        // changeFilter={changeFilter}
-        removeTask={removeTask}
-        addTask={addTask}
-        changeTaskStatus={changeTaskStatus}
-      />
+      {todlists.map((tl) => {
+        return (
+          <Todolist
+            key={tl.id}
+            title={tl.title}
+            tasks={tasks}
+            removeTask={removeTask}
+            addTask={addTask}
+            changeTaskStatus={changeTaskStatus}
+          />
+        );
+      })}
     </div>
   );
 }
