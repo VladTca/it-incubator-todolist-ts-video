@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Button } from "./Button";
+import "./App.css";
 
 export type TaskType = {
   id: string;
@@ -8,11 +9,16 @@ export type TaskType = {
 };
 
 type PropsType = {
+  id: string;
   title: string;
   tasks: Array<TaskType>;
   removeTask: (taskId: string) => void;
-  changeFilter: (filter: "all" | "active" | "completed") => void;
+  changeFilter: (
+    filter: "all" | "active" | "completed",
+    todolistId: string,
+  ) => void;
   addTask: (title: string) => void;
+  filter: "all" | "active" | "completed";
   // tasks:TaskType[]; -------equal
 };
 
@@ -22,6 +28,8 @@ export function Todolist({
   removeTask,
   changeFilter,
   addTask,
+  filter,
+  id,
 }: PropsType) {
   const taskLists =
     tasks.length === 0 ? (
@@ -78,6 +86,7 @@ export function Todolist({
           value={newTaskTitle}
           onChange={onNewTitleChangeHandler}
           onKeyDown={onKeyPressHandler}
+          className={error ? "error" : ""}
           // minLength={3}
           // maxLength={5}
         />
@@ -91,13 +100,13 @@ export function Todolist({
       </div>
       {taskLists}
       <div>
-        <Button onClickhandler={() => changeFilter("all")} title={"All"} />
+        <Button onClickhandler={() => changeFilter("all", id)} title={"All"} />
         <Button
-          onClickhandler={() => changeFilter("active")}
+          onClickhandler={() => changeFilter("active", id)}
           title={"Active"}
         />
         <Button
-          onClickhandler={() => changeFilter("completed")}
+          onClickhandler={() => changeFilter("completed", id)}
           title={"Completed"}
         />
       </div>
