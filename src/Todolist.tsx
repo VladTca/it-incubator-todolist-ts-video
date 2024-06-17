@@ -78,7 +78,7 @@ export function Todolist({
   // const taskInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div>
+    <div className={"todolist"}>
       <h3>{title}</h3>
       <div>
         <input
@@ -92,20 +92,26 @@ export function Todolist({
         />
         <Button
           title={"+"}
-          // onClickhandler={addTaskHandler}
           onClickhandler={addNewTask}
-          disabled={newTaskTitle.trim() === "" || newTaskTitle.length > 20}
+          disabled={newTaskTitle === "" || newTaskTitle.length > 20}
         />
         {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
+        {"error" && <div className="error-message">{"error"}</div>}
       </div>
       {taskLists}
       <div>
-        <Button onClickhandler={() => changeFilter("all", id)} title={"All"} />
         <Button
+          classes={filter === "all" ? "btn-folder-active" : ""}
+          onClickhandler={() => changeFilter("all", id)}
+          title={"All"}
+        />
+        <Button
+          classes={filter === "active" ? "btn-folder-active" : ""}
           onClickhandler={() => changeFilter("active", id)}
           title={"Active"}
         />
         <Button
+          classes={filter === "completed" ? "btn-folder-active" : ""}
           onClickhandler={() => changeFilter("completed", id)}
           title={"Completed"}
         />
