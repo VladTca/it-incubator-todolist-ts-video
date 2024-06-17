@@ -48,6 +48,12 @@ function App() {
     { id: v1(), title: "What to buy", filter: "completed" },
   ]);
 
+  let [allTasks, setAllTasks] = useState<TaskType[]>([
+    { id: v1(), title: "CSS", isDone: true },
+    { id: v1(), title: "JS", isDone: true },
+    { id: v1(), title: "REACT", isDone: false },
+  ]);
+
   return (
     <div className="App">
       {todolists.map((todolist) => {
@@ -66,7 +72,7 @@ function App() {
             key={todolist.id}
             id={todolist.id}
             title={todolist.title}
-            tasks={tasks}
+            tasks={filteredTasks}
             removeTask={removeTask}
             changeFilter={changeFilter}
             addTask={addTask}
