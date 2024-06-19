@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { TaskType, Todolist } from "./Todolist";
+import { Todolist } from "./Todolist";
 import { v1 } from "uuid";
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
       { id: v1(), title: "tea", isDone: false },
     ],
   });
-
+  // /----------------------------------------------------------------------------/
   const removeTask = (taskId: string, todolistId: string) => {
     // Иммутабельная работа
     const nextState = tasks[todolistId].filter((task) => task.id !== taskId);
