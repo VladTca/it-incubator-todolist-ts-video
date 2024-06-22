@@ -7,7 +7,7 @@ export type TaskType = {
   title: string;
   isDone: boolean;
 };
-
+// /-----------------------------------------------
 type PropsType = {
   id: string;
   title: string;
