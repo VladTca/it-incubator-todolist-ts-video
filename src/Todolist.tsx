@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "./Button";
 import "./App.css";
+import { AddItemForm } from "./AddItemForm";
 
 export type TaskType = {
   id: string;
@@ -60,41 +61,6 @@ export function Todolist({
       </ul>
     );
 
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-
-  const onNewTitleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget.value);
-  };
-
-  const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.ctrlKey && e.key === "Enter") {
-      if (newTaskTitle.trim() === "") {
-        return;
-      }
-
-      addTask(newTaskTitle, id);
-      setNewTaskTitle("");
-    }
-  };
-
-  const [error, setError] = useState<string | null>(null);
-  const addTaskHandler = () => {
-    if (newTaskTitle.trim() !== "") {
-      addTask(newTaskTitle, id);
-    } else {
-      setError("Title is required");
-    }
-    setNewTaskTitle("");
-  };
-  // const addTaskHandler = () => {
-  //   if (taskInputRef.current) {
-  //     addTask(taskInputRef.current.value);
-  //     taskInputRef.current.value = "";
-  //   }
-  // };
-
-  // const taskInputRef = useRef<HTMLInputElement>(null);
-
   const removeTodoList = (id: string) => {
     removeTodolist(id);
   };
@@ -105,24 +71,7 @@ export function Todolist({
         {title}
         <button onClick={() => removeTodoList(id)}>x</button>
       </h3>
-      <div>
-        <input
-          // ref={taskInputRef}
-          value={newTaskTitle}
-          onChange={onNewTitleChangeHandler}
-          onKeyDown={onKeyPressHandler}
-          className={error ? "error" : ""}
-          // minLength={3}
-          // maxLength={5}
-        />
-        <Button
-          title={"+"}
-          onClickhandler={addTaskHandler}
-          disabled={newTaskTitle === "" || newTaskTitle.length > 20}
-        />
-        {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
-        {error && <div className="error-message">{error}</div>}
-      </div>
+      <AddItemForm addTask={addTask} id={id} />
       {taskLists}
       <div>
         <Button
@@ -141,44 +90,6 @@ export function Todolist({
           title={"Completed"}
         />
       </div>
-    </div>
-  );
-}
-
-type AddItemFormPropsType = {};
-function AddItemForm(props: AddItemFormPropsType) {
-  let [title, setTitle] = useState("");
-  let [error, setError] = useState<string | null>(null);
-
-  const OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value);
-  };
-  const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.ctrlKey && e.key === "Enter") {
-      if (title.trim() === "") {
-        return;
-      }
-      props.addItem(title);
-      setTitle("");
-    }
-  };
-  return (
-    <div>
-      <input
-        value={title}
-        onChange={OnChangeHandler}
-        onKeyDown={onKeyPressHandler}
-        className={error ? "error" : ""}
-        // minLength={3}
-        // maxLength={5}
-      />
-      <Button
-        title={"+"}
-        onClickhandler={addTaskHandler}
-        disabled={newTaskTitle === "" || newTaskTitle.length > 20}
-      />
-      {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
-      {error && <div className="error-message">{error}</div>}
     </div>
   );
 }

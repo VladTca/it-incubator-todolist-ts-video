@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import { Todolist } from "./Todolist";
 import { v1 } from "uuid";
+import { AddItemForm } from "./AddItemForm";
 
 function App() {
   console.log("App");
@@ -72,21 +73,8 @@ function App() {
 
   return (
     <div className="App">
-      <input /> <button>x</button>
-      {todolists.map((todolist) => (
-        <Todolist
-          key={todolist.id}
-          id={todolist.id}
-          title={todolist.title}
-          tasks={tasks[todolist.id]}
-          removeTask={removeTask}
-          changeFilter={changeFilter}
-          addTask={addTask}
-          filter={todolist.filter}
-          changeStatus={changeStatus}
-          removeTodolist={removeTodolist}
-        />
-      ))}
+      <AddItemForm addTask={() => {}} id={"jhjhdgfj"} />
+
       {todolists.map((todolist) => {
         let filteredTasks = tasks[todolist.id];
         if (!filteredTasks) {
