@@ -85,7 +85,12 @@ function App() {
     );
     setTasks({
       ...tasks,
-      [todolistId]: { ...tasks[todolistId], data: newTasks },
+      [todolistId]: {
+        ...tasks[todolistId],
+        data: tasks[todolistId].data.map((task) =>
+          task.id === taskId ? { ...task, isDone: newIsDone } : task,
+        ),
+      },
     });
   }
 
