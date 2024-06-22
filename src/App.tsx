@@ -72,6 +72,21 @@ function App() {
 
   return (
     <div className="App">
+      <input /> <button>x</button>
+      {todolists.map((todolist) => (
+        <Todolist
+          key={todolist.id}
+          id={todolist.id}
+          title={todolist.title}
+          tasks={tasks[todolist.id]}
+          removeTask={removeTask}
+          changeFilter={changeFilter}
+          addTask={addTask}
+          filter={todolist.filter}
+          changeStatus={changeStatus}
+          removeTodolist={removeTodolist}
+        />
+      ))}
       {todolists.map((todolist) => {
         let filteredTasks = tasks[todolist.id];
         if (!filteredTasks) {

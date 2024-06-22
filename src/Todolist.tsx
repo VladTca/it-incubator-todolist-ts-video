@@ -144,3 +144,41 @@ export function Todolist({
     </div>
   );
 }
+
+type AddItemFormPropsType = {};
+function AddItemForm(props: AddItemFormPropsType) {
+  let [title, setTitle] = useState("");
+  let [error, setError] = useState<string | null>(null);
+
+  const OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value);
+  };
+  const onKeyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.ctrlKey && e.key === "Enter") {
+      if (title.trim() === "") {
+        return;
+      }
+      props.addItem(title);
+      setTitle("");
+    }
+  };
+  return (
+    <div>
+      <input
+        value={title}
+        onChange={OnChangeHandler}
+        onKeyDown={onKeyPressHandler}
+        className={error ? "error" : ""}
+        // minLength={3}
+        // maxLength={5}
+      />
+      <Button
+        title={"+"}
+        onClickhandler={addTaskHandler}
+        disabled={newTaskTitle === "" || newTaskTitle.length > 20}
+      />
+      {newTaskTitle.length > 10 && <div>recomend less than 10</div>}
+      {error && <div className="error-message">{error}</div>}
+    </div>
+  );
+}
