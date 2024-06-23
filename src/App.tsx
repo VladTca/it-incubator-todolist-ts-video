@@ -110,7 +110,13 @@ function App() {
     const id = v1();
     const newTodolist: TodolistType = { id: id, title: title, filter: "all" };
     setTodolists([...todolists, newTodolist]);
-    setTasks({ ...tasks, [id]: [] });
+    setTasks({
+      ...tasks,
+      [id]: [
+        { id: v1(), title: "HTML&CSS", isDone: true },
+        { id: v1(), title: "JS", isDone: true },
+      ],
+    });
   };
 
   return (
