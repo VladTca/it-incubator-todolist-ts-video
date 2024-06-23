@@ -9,7 +9,7 @@ type PropsType = {
   removeTask: (taskId: string, todolistId: string) => void;
   todolistId: string;
   changeFilter: (todolistId: string, filter: FilterValuesType) => void;
-  addTask: (title: string, todolistId: string) => void;
+  addTask: (todolistId: string, title: string) => void;
   changeTaskStatus: (
     todolistId: string,
     taskId: string,
@@ -35,14 +35,16 @@ export const Todolist = (props: PropsType) => {
   const changeFilterTasksHandler = (filter: FilterValuesType) => {
     changeFilter(todolistId, filter);
   };
-
+  const addTaskHandler = (title: string) => {
+    addTask(title, todolistId);
+  };
   return (
     <div>
       <h3>
         {title}
         <button onClick={() => removeTodolist(props.todolistId)}>x</button>
       </h3>
-      <AddItemForm addTask={addTask} todolistId={todolistId} />
+      <AddItemForm addItem={addTaskHandler} />
       {tasks.length === 0 ? (
         <p>Тасок нет</p>
       ) : (

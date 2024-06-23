@@ -2,16 +2,15 @@ import { Button } from "./Button";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 type Props = {
-  addTask: (todolistId: string, title: string) => void;
-  todolistId: string;
+  addItem: (todolistId: string) => void;
 };
-export const AddItemForm = ({ addTask, todolistId }: Props) => {
+export const AddItemForm = ({ addItem }: Props) => {
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const addTaskHandler = () => {
     if (taskTitle.trim() !== "") {
-      addTask(todolistId, taskTitle.trim());
+      addItem(taskTitle.trim());
       setTaskTitle("");
     } else {
       setError("Title is required");
