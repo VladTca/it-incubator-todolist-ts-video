@@ -68,14 +68,6 @@ function App() {
     // 4. Засетаем в state копию объекта, чтобы React отреагировал перерисовкой
     setTasks({ ...tasks, newTodolistTasks });
   };
-  // const removeTask = (taskId: string, todolistId: string) => {
-  //   const newTodolistTasks = {
-  //     ...tasks,
-  //     [todolistId]: tasks[todolistId].filter((t) => t.id !== taskId),
-  //   };
-  //   setTasks(newTodolistTasks);
-  //   // setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId) })
-  // };
 
   const removeTodolist = (todolistId: string) => {
     setTodolists(todolists.filter((el) => el.id !== todolistId));
@@ -119,6 +111,19 @@ function App() {
     });
   };
 
+  const changeTaskTitle = (
+    todolistId: string,
+    taskId: string,
+    title: string,
+  ) => {
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].map((t) =>
+        t.id === taskId ? { ...t, title } : t,
+      ),
+    });
+  };
+
   return (
     <div className="App">
       <AddItemForm addItem={addTodolist} />
@@ -145,6 +150,7 @@ function App() {
             changeTaskStatus={changeTaskStatus}
             filter={tl.filter}
             removeTodolist={removeTodolist}
+            changeTaskTitle={changeTaskTitle}
           />
         );
       })}
